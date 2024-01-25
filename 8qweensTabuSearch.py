@@ -42,12 +42,12 @@ def swichRows(board, row1, row2):
 def make8qweensBoard():
     currentBoard = STARTING_BOARD.copy()
     visitedBoards = []
-    print("Speed:")
     st = time.time()
     while True:
+        if len(visitedBoards) > 30:
+            visitedBoards.pop(0)
         currentScore = scoreBoard(currentBoard)
         visitedBoards.append(currentBoard)
-        print("-", end="", flush=True)
         currentNeighbors = []
         for row1 in range(8):
             for row2 in range(8):
@@ -61,10 +61,10 @@ def make8qweensBoard():
         for board in currentNeighbors:
             score = scoreBoard(board)
             if score < currentScore:
-                currentBoard = board
+                currentBoard = formatBoard(board)
                 if score == 0:
-                    return board
-                else:
-                    currentBoard = currentNeighbors[randomNumber]
+                    return currentBoard
+                continue
+        currentBoard = formatBoard(currentNeighbors[randomNumber])
 
 print(make8qweensBoard())
